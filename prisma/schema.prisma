@@ -1,0 +1,85 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("POSTGRES_URI")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  email    String @unique
+  password String
+  name     String
+
+  aboutUser     Json?          @map("about_user")
+  wishlists     Wishlist[]     @relation("UserWishlists")
+  reservedItems WishlistItem[] @relation("UserReservedWishes")
+
+  @@map("user")
+}
+
+model Wishlist {
+  id        String    @id @default(uuid())
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  user   User   @relation("UserWishlists", fields: [userID], references: [id], onDelete: Cascade)
+  userID String @map("author_id")
+
+  title       String
+  description String?
+  isGroupList Boolean        @default(false) @map("is_group_list")
+  accessLevel Access         @map("access_level")
+  items       WishlistItem[] @relation("WishlistItems")
+
+  @@map("wishlist")
+}
+
+enum Access {
+  PRIVATE //личные списки, которые доступны только владельцу
+  PUBLIC //списки, которые видны всем
+  INVITE //групповые списки, доступ по приглашению
+}
+
+model WishlistItem {
+  id        String    @id @default(uuid())
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  wishlist   Wishlist @relation("WishlistItems", fields: [wishlistID], references: [id], onDelete: Cascade)
+  wishlistID String   @map("wishlist_id")
+
+  title       String
+  description String?
+  link        String?
+  priceRange  PriceRange @map("price_range")
+  priority    Priority
+  imagesURL   Json       @map("images_url")
+
+  isReserved    Boolean @default(false) @map("is_reserved")
+  reserveUser   User?   @relation("UserReservedWishes", fields: [reserveUserID], references: [id], onDelete: Cascade)
+  reserveUserID String? @unique @map("reserve_user_id")
+
+  @@map("wishlist_item")
+}
+
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+enum PriceRange {
+  UpTo1000
+  From1000To5000
+  From5000To10000
+  From10000To50000
+  Over50000
+}
