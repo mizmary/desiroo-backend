@@ -16,7 +16,15 @@ model User {
   password String
   name     String
 
-  aboutUser     Json?          @map("about_user")
+  bio  String?  @map("bio")
+  tags String[] @map("tags")
+
+  shirtSizes    String[] @map("shirt_sizes")
+  shoeSizes     String[] @map("shoe_sizes")
+  ringSizes     String[] @map("ring_sizes")
+  braceletSizes String[] @map("bracelet_sizes")
+  necklaceSizes String[] @map("necklace_sizes")
+
   wishlists     Wishlist[]     @relation("UserWishlists")
   reservedItems WishlistItem[] @relation("UserReservedWishes")
 
