@@ -38,12 +38,12 @@ model Wishlist {
   deletedAt DateTime? @map("deleted_at")
 
   user   User   @relation("UserWishlists", fields: [userID], references: [id], onDelete: Cascade)
-  userID String @map("author_id")
+  userID String @map("user_id")
 
   title       String
   description String?
   isGroupList Boolean        @default(false) @map("is_group_list")
-  accessLevel Access         @map("access_level")
+  accessLevel Access         @default(PUBLIC) @map("access_level")
   items       WishlistItem[] @relation("WishlistItems")
 
   @@map("wishlist")
