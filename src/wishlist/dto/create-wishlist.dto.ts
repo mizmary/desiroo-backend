@@ -1,24 +1,20 @@
-import { Access } from "@prisma/client";
+import { Access } from "@prisma/client"
 // import { Transform } from "class-transformer";
-import { IsBoolean, IsEnum, IsOptional, IsString } from "class-validator";
+import { IsBoolean, IsEnum, IsOptional, IsString } from "class-validator"
 
-export class CreateWishlistDto{
-    // @IsString()
-    // userID: string
+export class CreateWishlistDto {
+  @IsString()
+  title: string
 
-    @IsString()
-    title: string
+  @IsString()
+  @IsOptional()
+  description?: string
 
-    @IsString()
-    @IsOptional()
-    description?: string
+  @IsOptional()
+  @IsBoolean()
+  isGroupList: boolean
 
-    @IsOptional()
-    @IsBoolean()
-    isGroupList: boolean
-
-    @IsEnum(Access)
-    @IsOptional()
-    accessLevel: Access
-
+  @IsEnum(Access)
+  @IsOptional()
+  accessLevel: Access
 }
