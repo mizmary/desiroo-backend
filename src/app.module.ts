@@ -8,7 +8,13 @@ import { UserModule } from "./user/user.module"
 import { WishlistItemModule } from "./wishlist-item/wishlist-item.module"
 
 @Module({
-  imports: [ConfigModule.forRoot(), AuthModule, UserModule, WishlistModule, WishlistItemModule],
+  imports: [
+    ConfigModule.forRoot(),
+    AuthModule,
+    UserModule,
+    WishlistModule,
+    WishlistItemModule
+  ],
   controllers: [AppController],
   providers: [AppService]
 })

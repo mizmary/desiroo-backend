@@ -30,7 +30,10 @@ export class AuthController {
   @UsePipes(new ValidationPipe())
   @HttpCode(200)
   @Post("register")
-  async register(@Body() dto: AuthDto, @Res({ passthrough: true }) res: Response) {
+  async register(
+    @Body() dto: AuthDto,
+    @Res({ passthrough: true }) res: Response
+  ) {
     const { refreshToken, ...response } = await this.authService.register(dto)
     this.authService.addRefreshTokenToResponse(res, refreshToken)
 
@@ -39,16 +42,21 @@ export class AuthController {
 
   @HttpCode(200)
   @Post("login/access-token")
-  async getNewTokens(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
-    const refreshTokenFromCookies = req.cookies[this.authService.REFRESH_TOKEN_NAME]
+  async getNewTokens(
+    @Req() req: Request,
+    @Res({ passthrough: true }) res: Response
+  ) {
+    const refreshTokenFromCookies =
+      req.cookies[this.authService.REFRESH_TOKEN_NAME]
 
     if (!refreshTokenFromCookies) {
       this.authService.removeRefreshTokenToResponse(res)
       throw new UnauthorizedException("Refresh token not passed")
     }
 
-    const { refreshToken, ...response } =
-      await this.authService.getNewTokens(refreshTokenFromCookies)
+    const { refreshToken, ...response } = await this.authService.getNewTokens(
+      refreshTokenFromCookies
+    )
 
     this.authService.addRefreshTokenToResponse(res, refreshToken)
 

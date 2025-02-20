@@ -29,7 +29,10 @@ export class WishlistItemController {
   @HttpCode(200)
   @Post(":wishlistID")
   @Auth()
-  async create(@Body() dto: CreateWishlistItemDto, @Param("wishlistID") wishlistID: string) {
+  async create(
+    @Body() dto: CreateWishlistItemDto,
+    @Param("wishlistID") wishlistID: string
+  ) {
     return this.wishlistItemService.create(dto, wishlistID)
   }
 
@@ -48,7 +51,10 @@ export class WishlistItemController {
   @HttpCode(200)
   @Delete(":wishlistID/:itemID")
   @Auth()
-  async delete(@Param("wishlistID") wishlistID: string, @Param("itemID") itemID: string) {
+  async delete(
+    @Param("wishlistID") wishlistID: string,
+    @Param("itemID") itemID: string
+  ) {
     return this.wishlistItemService.delete(wishlistID, itemID)
   }
 }

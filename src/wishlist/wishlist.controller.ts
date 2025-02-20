@@ -35,7 +35,10 @@ export class WishlistController {
   @HttpCode(200)
   @Post()
   @Auth()
-  async create(@Body() dto: CreateWishlistDto, @CurrentUser("id") userID: string) {
+  async create(
+    @Body() dto: CreateWishlistDto,
+    @CurrentUser("id") userID: string
+  ) {
     return this.wishlistService.create(dto, userID)
   }
 

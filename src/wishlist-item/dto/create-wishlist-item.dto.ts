@@ -1,5 +1,12 @@
 import { PriceRange, Priority, Prisma } from "@prisma/client"
-import { IsBoolean, IsEnum, IsJSON, IsOptional, IsString, IsUrl } from "class-validator"
+import {
+  IsBoolean,
+  IsEnum,
+  IsJSON,
+  IsOptional,
+  IsString,
+  IsUrl
+} from "class-validator"
 
 export class CreateWishlistItemDto {
   @IsString()
