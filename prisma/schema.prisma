@@ -69,6 +69,7 @@ model WishlistItem {
   link        String?
   priceRange  PriceRange @map("price_range")
   priority    Priority
+  isCompleted Boolean    @default(false) @map("is_completed")
   imagesURL   Json       @map("images_url")
 
   isReserved    Boolean @default(false) @map("is_reserved")
