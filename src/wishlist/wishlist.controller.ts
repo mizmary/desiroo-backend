@@ -30,6 +30,17 @@ export class WishlistController {
   async getOne(@CurrentUser("id") userID: string, @Param("id") id: string) {
     return this.wishlistService.getOne(userID, id)
   }
+  @Get("/public/:userId")
+  @Auth()
+  async getPublicWishlists(@Param("userId") userId: string) {
+    return this.wishlistService.getPublicWishlists(userId)
+  }
+
+  @Get("/public/:userId/:listId")
+  @Auth()
+  async getPublicWishlist(@Param("userId") userId: string, @Param("listId") listId: string) {
+    return this.wishlistService.getPublicWishlist(userId, listId)
+  }
 
   @UsePipes(new ValidationPipe())
   @HttpCode(200)

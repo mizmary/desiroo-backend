@@ -24,6 +24,14 @@ export class WishlistItemController {
   async getAll(@Param("wishlistID") wishlistID: string) {
     return this.wishlistItemService.getAll(wishlistID)
   }
+  @Get(":wishlistID/items/:itemID")
+  @Auth()
+  async getOne(
+    @Param("wishlistID") wishlistID: string,
+    @Param("itemID") itemID: string
+  ) {
+    return this.wishlistItemService.getOne(wishlistID, itemID)
+  }
 
   @UsePipes(new ValidationPipe())
   @HttpCode(200)

@@ -7,50 +7,75 @@ import { UpdateWishlistDto } from "./dto/update-user.dto"
 export class WishlistService {
   constructor(private prisma: PrismaService) {}
 
-  async getAll(userID: string) {
+  async getAll(userId: string) {
     return this.prisma.wishlist.findMany({
       where: {
-        userID
+        userId
+      },
+      include: {
+        items: true
       }
     })
   }
 
-  async getOne(userID: string, listID: string) {
+  async getPublicWishlists(userId: string) {
+    return this.prisma.wishlist.findMany({
+      where: {
+        userId,
+        accessLevel: 'PUBLIC'
+      },
+      include: {
+        items: true
+      }
+    })
+  }
+
+  async getOne(userId: string, listId: string) {
     return this.prisma.wishlist.findFirst({
       where: {
-        userID,
-        id: listID
+        userId,
+        id: listId
       }
     })
   }
 
-  async create(dto: CreateWishlistDto, userID: string) {
+  async getPublicWishlist(userId: string, listId: string) {
+    return this.prisma.wishlist.findFirst({
+      where: {
+        userId,
+        id: listId,
+        accessLevel: 'PUBLIC'
+      }
+    })
+  }
+
+  async create(dto: CreateWishlistDto, userId: string) {
     return this.prisma.wishlist.create({
       data: {
         ...dto,
         user: {
           connect: {
-            id: userID
+            id: userId
           }
         }
       }
     })
   }
 
-  async update(dto: UpdateWishlistDto, userID: string, listID: string) {
+  async update(dto: UpdateWishlistDto, userId: string, listId: string) {
     return this.prisma.wishlist.update({
       where: {
-        userID,
-        id: listID
+        userId,
+        id: listId
       },
       data: dto
     })
   }
 
-  async delete(listID: string) {
+  async delete(listId: string) {
     return this.prisma.wishlist.delete({
       where: {
-        id: listID
+        id: listId
       }
     })
   }

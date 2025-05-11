@@ -10,39 +10,48 @@ export class WishlistItemService {
   async getAll(id: string) {
     return this.prisma.wishlistItem.findMany({
       where: {
-        wishlistID: id
+        wishlistId: id
       }
     })
   }
 
-  async create(dto: CreateWishlistItemDto, wishlistID: string) {
+  async getOne(wishlistId: string, id: string) {
+    return this.prisma.wishlistItem.findFirst({
+      where: {
+        wishlistId: wishlistId,
+        id: id
+      }
+    })
+  }
+
+  async create(dto: CreateWishlistItemDto, wishlistId: string) {
     return this.prisma.wishlistItem.create({
       data: {
         ...dto,
         wishlist: {
           connect: {
-            id: wishlistID
+            id: wishlistId
           }
         }
       }
     })
   }
 
-  async update(dto: UpdateWishlistItemDto, wishlistID: string, itemId: string) {
+  async update(dto: UpdateWishlistItemDto, wishlistId: string, itemId: string) {
     return this.prisma.wishlistItem.update({
       where: {
-        wishlistID,
+        wishlistId,
         id: itemId
       },
       data: dto
     })
   }
 
-  async delete(wishlistID: string, itemID: string) {
+  async delete(wishlistId: string, itemId: string) {
     return this.prisma.wishlistItem.delete({
       where: {
-        wishlistID,
-        id: itemID
+        wishlistId,
+        id: itemId
       }
     })
   }

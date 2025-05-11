@@ -28,7 +28,24 @@ model User {
   wishlists     Wishlist[]     @relation("UserWishlists")
   reservedItems WishlistItem[] @relation("UserReservedWishes")
 
+  following Follow[] @relation("Following")
+  followers Follow[] @relation("Followers")
+
   @@map("user")
+}
+
+model Follow {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now()) @map("created_at")
+
+  follower   User   @relation("Following", fields: [followerId], references: [id])
+  followerId String @map("follower_id")
+
+  following   User   @relation("Followers", fields: [followingId], references: [id])
+  followingId String @map("following_id")
+
+  @@unique([followerId, followingId])
+  @@map("follow")
 }
 
 model Wishlist {
@@ -37,8 +54,8 @@ model Wishlist {
   updatedAt DateTime  @updatedAt @map("updated_at")
   deletedAt DateTime? @map("deleted_at")
 
-  user   User   @relation("UserWishlists", fields: [userID], references: [id], onDelete: Cascade)
-  userID String @map("user_id")
+  user   User   @relation("UserWishlists", fields: [userId], references: [id], onDelete: Cascade)
+  userId String @map("user_id")
 
   title       String
   description String?
@@ -61,8 +78,8 @@ model WishlistItem {
   updatedAt DateTime  @updatedAt @map("updated_at")
   deletedAt DateTime? @map("deleted_at")
 
-  wishlist   Wishlist @relation("WishlistItems", fields: [wishlistID], references: [id], onDelete: Cascade)
-  wishlistID String   @map("wishlist_id")
+  wishlist   Wishlist @relation("WishlistItems", fields: [wishlistId], references: [id], onDelete: Cascade)
+  wishlistId String   @map("wishlist_id")
 
   title       String
   description String?
@@ -73,8 +90,8 @@ model WishlistItem {
   imagesURL   Json       @map("images_url")
 
   isReserved    Boolean @default(false) @map("is_reserved")
-  reserveUser   User?   @relation("UserReservedWishes", fields: [reserveUserID], references: [id], onDelete: Cascade)
-  reserveUserID String? @unique @map("reserve_user_id")
+  reserveUser   User?   @relation("UserReservedWishes", fields: [reserveUserId], references: [id], onDelete: Cascade)
+  reserveUserId String? @unique @map("reserve_user_id")
 
   @@map("wishlist_item")
 }
