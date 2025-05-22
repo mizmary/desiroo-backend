@@ -35,6 +35,10 @@ export class UserDto extends AboutUser {
   @IsString()
   password?: string
 
+  @IsString()
+  name: string
+
+  @IsString()
   @IsOptional()
-  name?: string
+  avatar?: string;
 }

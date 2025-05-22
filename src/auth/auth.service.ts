@@ -6,7 +6,7 @@ import {
 } from "@nestjs/common"
 import { JwtService } from "@nestjs/jwt"
 import { UserService } from "src/user/user.service"
-import { AuthDto } from "./dto/auth.dto"
+import { AuthDto, LoginDTO } from "./dto/auth.dto"
 import { verify } from "argon2"
 import { Response } from "express"
 
@@ -20,7 +20,7 @@ export class AuthService {
     private userService: UserService
   ) {}
 
-  async login(dto: AuthDto) {
+  async login(dto: LoginDTO) {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password, ...user } = await this.validateUser(dto)
     const tokens = this.issueTokens(user.id)
@@ -73,7 +73,7 @@ export class AuthService {
     return { accessToken, refreshToken }
   }
 
-  private async validateUser(dto: AuthDto) {
+  private async validateUser(dto: LoginDTO) {
     const user = await this.userService.getByEmail(dto.email)
     if (!user) throw new NotFoundException("User not found")
 

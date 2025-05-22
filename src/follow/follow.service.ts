@@ -44,17 +44,41 @@ export class FollowService {
   }
 
   async getFollowing(userId: string) {
-    const user = await this.prisma.user.findUnique({
-      where: { id: userId },
-      include: {
-        following: {
-          include: {
-            following: true
+  const user = await this.prisma.user.findUnique({
+    where: { id: userId },
+    include: {
+      following: {
+        include: {
+          following: {
+            include: {
+              reservedItems: true,
+              wishlists: {
+                include: {
+                  items: true
+                }
+              }
+            }
           }
         }
       }
-    })
+    }
+  })
 
-    return user?.following.map((f) => f.following)
-  }
+  return user?.following.map((f) => {
+    const followedUser = f.following
+
+    const completedWishesCount = followedUser.wishlists
+      .flatMap((wishlist) => wishlist.items)
+      .filter((item) => item.isCompleted).length
+
+    return {
+      id: followedUser.id,
+      name: followedUser.name,
+      email: followedUser.email,
+      bio: followedUser.bio,
+      reservedCount: followedUser.reservedItems.length,
+      completedWishesCount
+    }
+  })
+}
 }

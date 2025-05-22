@@ -17,12 +17,12 @@ export class FollowController {
     return this.followService.unfollowUser(dto)
   }
 
-  @Get("followers/:id")
+  @Get("/followers/:id")
   getFollowers(@Param("id") userId: string) {
     return this.followService.getFollowers(userId)
   }
 
-  @Get("following/:id")
+  @Get("/following/:id")
   getFollowing(@Param("id") userId: string) {
     return this.followService.getFollowing(userId)
   }
