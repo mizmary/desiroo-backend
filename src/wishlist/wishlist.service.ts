@@ -22,7 +22,7 @@ export class WishlistService {
     return this.prisma.wishlist.findMany({
       where: {
         userId,
-        accessLevel: 'PUBLIC'
+        accessLevel: "PUBLIC"
       },
       include: {
         items: true
@@ -44,7 +44,7 @@ export class WishlistService {
       where: {
         userId,
         id: listId,
-        accessLevel: 'PUBLIC'
+        accessLevel: "PUBLIC"
       }
     })
   }

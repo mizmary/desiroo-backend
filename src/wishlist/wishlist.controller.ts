@@ -37,7 +37,10 @@ export class WishlistController {
 
   @Get("/public/:userId/:listId")
   @Auth()
-  async getPublicWishlist(@Param("userId") userId: string, @Param("listId") listId: string) {
+  async getPublicWishlist(
+    @Param("userId") userId: string,
+    @Param("listId") listId: string
+  ) {
     return this.wishlistService.getPublicWishlist(userId, listId)
   }
 

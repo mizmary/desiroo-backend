@@ -40,5 +40,7 @@ export class UserDto extends AboutUser {
 
   @IsString()
   @IsOptional()
-  avatar?: string;
+  avatar?: string
 }
+
+export type UpdateUserDTO = Partial<UserDto>

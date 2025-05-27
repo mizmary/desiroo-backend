@@ -11,12 +11,12 @@ export class AuthDto {
   password: string
 
   @IsString()
-  @MinLength(3, {message: "Name must be at least 3 characters long"})
-  name:string
+  @MinLength(3, { message: "Name must be at least 3 characters long" })
+  name: string
 }
 
 export class LoginDTO {
-   @IsEmail()
+  @IsEmail()
   email: string
 
   @MinLength(8, {

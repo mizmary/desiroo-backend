@@ -4,7 +4,7 @@ import { ConfigModule } from "@nestjs/config"
 import { WishlistModule } from "./wishlist/wishlist.module"
 import { UserModule } from "./user/user.module"
 import { WishlistItemModule } from "./wishlist-item/wishlist-item.module"
-import { FollowModule } from './follow/follow.module';
+import { FollowModule } from "./follow/follow.module"
 
 @Module({
   imports: [

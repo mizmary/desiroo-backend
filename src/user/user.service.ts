@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common"
 import { hash } from "argon2"
 import { AuthDto } from "src/auth/dto/auth.dto"
 import { PrismaService } from "src/prisma.service"
-import { UserDto } from "./dto/user.dto"
+import { UpdateUserDTO, UserDto } from "./dto/user.dto"
 
 @Injectable()
 export class UserService {
@@ -39,7 +39,7 @@ export class UserService {
     })
   }
 
-  async update(id: string, dto: UserDto) {
+  async update(id: string, dto: UpdateUserDTO) {
     let data = dto
     if (dto.password) {
       data = { ...dto, password: await hash(dto.password) }

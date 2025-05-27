@@ -26,4 +26,12 @@ export class FollowController {
   getFollowing(@Param("id") userId: string) {
     return this.followService.getFollowing(userId)
   }
+
+  @Get("/is-following/:followerId/:followingId")
+  isFollowing(
+    @Param("followerId") followerId: string,
+    @Param("followingId") followingId: string
+  ) {
+    return this.followService.isFollowing(followerId, followingId)
+  }
 }
