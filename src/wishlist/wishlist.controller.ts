@@ -15,7 +15,7 @@ import { CurrentUser } from "src/auth/decorators/user.decorator"
 import { Auth } from "src/auth/decorators/auth.decorator"
 import { CreateWishlistDto } from "./dto/create-wishlist.dto"
 
-@Controller("user/wishlists")
+@Controller("wishlists")
 export class WishlistController {
   constructor(private readonly wishlistService: WishlistService) {}
 
