@@ -74,8 +74,7 @@ export class FollowService {
       return {
         id: followedUser.id,
         name: followedUser.name,
-        email: followedUser.email,
-        bio: followedUser.bio,
+        avatar: followedUser.avatar,
         reservedCount: followedUser.reservedItems.length,
         completedWishesCount
       }
